@@ -1,0 +1,9 @@
+{
+    "appId": "application-demoapi-hxkodwi",
+    "appUrl": "https://services.cloud.mongodb.com/groups/6516677678bc2e3e310247b9/apps/66712392beedc30f49daee98",
+    "baseUrl": "https://services.cloud.mongodb.com",
+    "clientApiBaseUrl": "https://ap-southeast-1.aws.services.cloud.mongodb.com",
+    "dataApiBaseUrl": "https://ap-southeast-1.aws.data.mongodb-api.com",
+    "dataExplorerLink": "https://cloud.mongodb.com/links/6516677678bc2e3e310247b9/explorer/Cluster0/database/collection/find",
+    "dataSourceName": "mongodb-atlas"
+}
