@@ -69,9 +69,9 @@ class RealmServices with ChangeNotifier {
     notifyListeners();
   }
 
-  void createItem(String summary, bool isComplete) {
-    final newItem =
-        Item(ObjectId(), summary, currentUser!.id, isComplete: isComplete);
+  void createItem(String summary, bool isComplete, int? priority) {
+    final newItem = Item(ObjectId(), summary, currentUser!.id,
+        isComplete: isComplete, priority: priority);
     realm.write<Item>(() => realm.add<Item>(newItem));
     notifyListeners();
   }
@@ -82,13 +82,16 @@ class RealmServices with ChangeNotifier {
   }
 
   Future<void> updateItem(Item item,
-      {String? summary, bool? isComplete}) async {
+      {String? summary, bool? isComplete, int? priority}) async {
     realm.write(() {
       if (summary != null) {
         item.summary = summary;
       }
       if (isComplete != null) {
         item.isComplete = isComplete;
+      }
+      if (priority != null) {
+        item.priority = priority;
       }
     });
     notifyListeners();
@@ -107,4 +110,11 @@ class RealmServices with ChangeNotifier {
     realm.close();
     super.dispose();
   }
+}
+
+abstract class Prioritylevel {
+  static int severe = 0;
+  static int high = 1;
+  static int medium = 2;
+  static int low = 3;
 }

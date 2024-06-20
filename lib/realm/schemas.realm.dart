@@ -14,6 +14,7 @@ class Item extends _Item with RealmEntity, RealmObjectBase, RealmObject {
     ObjectId id,
     String summary,
     String ownerId, {
+    int? priority,
     bool isComplete = false,
   }) {
     if (!_defaultsSet) {
@@ -22,6 +23,7 @@ class Item extends _Item with RealmEntity, RealmObjectBase, RealmObject {
       });
     }
     RealmObjectBase.set(this, '_id', id);
+    RealmObjectBase.set(this, 'priority', priority);
     RealmObjectBase.set(this, 'isComplete', isComplete);
     RealmObjectBase.set(this, 'summary', summary);
     RealmObjectBase.set(this, 'owner_id', ownerId);
@@ -33,6 +35,11 @@ class Item extends _Item with RealmEntity, RealmObjectBase, RealmObject {
   ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
   @override
   set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
+
+  @override
+  int? get priority => RealmObjectBase.get<int>(this, 'priority') as int?;
+  @override
+  set priority(int? value) => RealmObjectBase.set(this, 'priority', value);
 
   @override
   bool get isComplete => RealmObjectBase.get<bool>(this, 'isComplete') as bool;
@@ -59,6 +66,7 @@ class Item extends _Item with RealmEntity, RealmObjectBase, RealmObject {
   EJsonValue toEJson() {
     return <String, dynamic>{
       '_id': id.toEJson(),
+      'priority': priority.toEJson(),
       'isComplete': isComplete.toEJson(),
       'summary': summary.toEJson(),
       'owner_id': ownerId.toEJson(),
@@ -70,6 +78,7 @@ class Item extends _Item with RealmEntity, RealmObjectBase, RealmObject {
     return switch (ejson) {
       {
         '_id': EJsonValue id,
+        'priority': EJsonValue priority,
         'isComplete': EJsonValue isComplete,
         'summary': EJsonValue summary,
         'owner_id': EJsonValue ownerId,
@@ -78,6 +87,7 @@ class Item extends _Item with RealmEntity, RealmObjectBase, RealmObject {
           fromEJson(id),
           fromEJson(summary),
           fromEJson(ownerId),
+          priority: fromEJson(priority),
           isComplete: fromEJson(isComplete),
         ),
       _ => raiseInvalidEJson(ejson),
@@ -90,6 +100,7 @@ class Item extends _Item with RealmEntity, RealmObjectBase, RealmObject {
     return SchemaObject(ObjectType.realmObject, Item, 'Item', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
+      SchemaProperty('priority', RealmPropertyType.int, optional: true),
       SchemaProperty('isComplete', RealmPropertyType.bool),
       SchemaProperty('summary', RealmPropertyType.string),
       SchemaProperty('ownerId', RealmPropertyType.string, mapTo: 'owner_id'),
